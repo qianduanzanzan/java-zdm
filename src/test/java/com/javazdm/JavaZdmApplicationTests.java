@@ -1,10 +1,10 @@
-package com.projectzdm;
+package com.javazdm;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemoApplicationTests {
+class JavaZdmApplicationTests {
 
     @Test
     void contextLoads() {

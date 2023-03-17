@@ -1,12 +1,11 @@
 package com.javazdm.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -22,6 +21,29 @@ import java.io.Serializable;
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @TableId(type = IdType.UUID)
+    @TableId(type = IdType.ASSIGN_UUID)
     private String id;
+
+    private String username;
+
+    private String password;
+
+    private String nickName;
+
+    private String phone;
+
+    private String avatar;
+    private Integer sex;
+
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createAt;
+
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updateAt;
+
+    private Integer stopFlag;
+
+    public void deletePassword() {
+//        this.password = "";
+    }
 }

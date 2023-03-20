@@ -11,4 +11,8 @@ public class LoginVo {
     private String username;
     @NotBlank(message = "密码未传")
     private String password;
+
+    @NotBlank(message = "验证码未传")
+    private String code;
+    private String codeId;
 }

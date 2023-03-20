@@ -55,13 +55,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         try {
             String username = loginVo.getUsername();
             String password = loginVo.getPassword();
+            String code = loginVo.getCode();
+            String codeId = loginVo.getCodeId();
+            String redisCodeId = redisTemplate.opsForValue().get(codeId).toString();
+            if(redisCodeId.equals(code)){
+                return RespBean.error(RespBeanEnum.CODE_ERROR);
+            }
             if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
                 return RespBean.error(RespBeanEnum.ACCPWD_NOT_EMPTY);
             }
             QueryWrapper wrapper = new QueryWrapper();
             wrapper.eq("username", username);
             User user = userMapper.selectOne(wrapper);
-            if (StringUtils.isEmpty(user)) {
+            if (!StringUtils.isEmpty(user)) {
                 return RespBean.error(RespBeanEnum.ACC_ERROR);
             }
             if (!user.getPassword().equals(password)) {

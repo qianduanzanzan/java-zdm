@@ -1,7 +1,9 @@
 package com.javazdm.utils;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.javazdm.entity.User;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +31,33 @@ public class TokenUtil {
                     .sign(algorithm);
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Integer getIdFromToken(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT jwt = verifier.verify(token);
+            Integer userId = jwt.getClaim("userId").asInt();
+            return userId;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    public String getUpdateAtFromToken(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT jwt = verifier.verify(token);
+            String updateAt_str = jwt.getClaim("updateAt").asString();
+//            System.out.println(updateAt_str);
+//            DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//            LocalDateTime updateAt = LocalDateTime.parse(updateAt_str,df);
+            return updateAt_str;
+        } catch (Exception e) {
             return null;
         }
     }
